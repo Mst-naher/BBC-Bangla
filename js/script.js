@@ -4,6 +4,8 @@ const categoryContainer = document.getElementById("categoryContainer");
 const newsContainer = document.getElementById("newsContainer");
 const bookmarkContainer = document.getElementById("bookmarkContainer");
 const bookmarkCount = document.getElementById("bookmarkCount");
+const newsDetailsModal = document.getElementById("news-details-modal");
+const modalContainer = document.getElementById("modalContainert");
 
 let bookmarks = [];
 
@@ -87,6 +89,7 @@ const showNewsByCategory = (articles) => {
        <h1 class="font-semibold"> ${article.title}</h1>
        <p class="text-sm"> ${article.time}</p>
         <button class="btn ">Bookmark</button>
+        <button class="btn ">View Details</button>
         </div>
        
       </div>
@@ -102,6 +105,12 @@ newsContainer.addEventListener("click", (e) => {
     // console.log("Bookmark is clicked");
     handleBookmarks(e);
   }
+
+   if (e.target.innerText === "View Details") {
+     // console.log("View Details is clicked");
+     handleViewDetails(e);
+   }
+
 });
 
 const handleBookmarks = (e) => {
@@ -143,6 +152,12 @@ const handleDeleteBookmark = (bookmarkId) => {
 
   showBookmarks(bookmarks);
 };
+
+handleViewDetails = (e) =>{
+const id = e.target.parentNode.id;
+// console.log(id)
+newsDetailsModal.showModal()
+}
 
 showLoading = () => {
   newsContainer.innerHTML = `
