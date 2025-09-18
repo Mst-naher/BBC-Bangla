@@ -39,8 +39,55 @@
     </style>
   </head>
   <body>
-    <header >
-      <div class=" bg-red-600 py-5">
+    <div class="navbar bg-base-100 shadow-sm">
+      <div class="navbar-start">
+        <div class="dropdown">
+          <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </div>
+          <ul
+            tabindex="0"
+            class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+          >
+            <li><a>Item 1</a></li>
+            <!-- <li>
+          <a>Parent</a>
+          <ul class="p-2">
+            <li><a>Submenu 1</a></li>
+            <li><a>Submenu 2</a></li>
+          </ul>
+        </li> -->
+            <li><a>Item 3</a></li>
+          </ul>
+        </div>
+        <a class="btn btn-ghost text-xl">daisyUI</a>
+      </div>
+      <div class="navbar-center hidden lg:flex">
+        <ul class="menu menu-horizontal px-1">
+          <li><a>Item 1</a></li>
+          <li><a>Item 3</a></li>
+          <li><a>Item 3</a></li>
+        </ul>
+      </div>
+      <div class="navbar-end">
+        <a class="btn">Button</a>
+      </div>
+    </div>
+    <header>
+      <div class="bg-red-600 py-5">
         <div class="max-w-7xl mx-auto px-5">
           <img class="invert" src="./assets/logo.svg" alt="" />
         </div>
@@ -48,7 +95,7 @@
       <nav class="border-b border-gray-200">
         <ul
           id="categoryContainer"
-          class="flex gap-10 text-lg max-w-7xl mx-auto px-5"
+          class="flex w-full overflow-x-scroll max-w-7xl mx-auto gap-10 px-5 text-lg bg-green-500"
         >
           <!-- <li class="hover:border-b-4 hover:border-red-600 cursor-pointer">
             মূল পাতা
@@ -57,21 +104,26 @@
       </nav>
     </header>
 
-    <main class="max-w-7xl mx-auto px-5 mt-5 grid grid-cols-4 gap-10">
+    <main class="max-w-7xl mx-auto px-5 mt-5 grid grid-cols-5 gap-2 lg:gap-10">
+      <div
+        id="newsContainer"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 col-span-3 gap-5"
+      >
+    <div class="bg-green-400 p-5"> Loading ...
 
-      <div id="newsContainer" class="grid grid-cols-3 col-span-3 gap-5">
- 
+    </div>
+    </div>
+
+      <div class="col-span-2 border border-gray-300 rounded-lg overflow-hidden">
+        <div class="flex justify-between items-center bg-red-600 text-white gap-2 p-2 lg:p-8  lg:font-semibold text-center   lg:text-2xl">
+          <h1>Bookmark</h1>
+          <p id="bookmarkCount"><span>0</span></p>
+        </div>
+
+        <div id="bookmarkContainer">
+          
+        </div>
       </div>
-
-       <div class="col-span-1 border border-gray-300 rounded-lg overflow-hidden">
-          <div class="bg-red-600 text-white p-5 font-semibold text-center">
-             <h1>Bookmark</h1>
-          </div>
-
-            <div id="bookmarkContainer">  </div>
-
-       </div>
-
     </main>
 
     <script src="./js/script.js"></script>

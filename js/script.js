@@ -3,9 +3,9 @@
 const categoryContainer = document.getElementById("categoryContainer");
 const newsContainer = document.getElementById("newsContainer");
 const bookmarkContainer = document.getElementById("bookmarkContainer");
+const bookmarkCount = document.getElementById("bookmarkCount");
 
-
-let bookmarks = []
+let bookmarks = [];
 
 const loadCategory = () => {
   fetch("https://news-api-fs.vercel.app/api/categories") //promise
@@ -42,6 +42,7 @@ const showCategory = (categories) => {
 
     if (e.target.localName === "li") {
       // console.log(e.target);
+      showLoading();
       e.target.classList.add("border-b-4");
       loadNewsByCategory(e.target.id);
     }
@@ -49,7 +50,7 @@ const showCategory = (categories) => {
 };
 
 const loadNewsByCategory = (categoryId) => {
-  console.log(categoryId);
+  // console.log(categoryId);
 
   fetch(`https://news-api-fs.vercel.app/api/categories/${categoryId}`)
     .then((res) => res.json())
@@ -60,15 +61,22 @@ const loadNewsByCategory = (categoryId) => {
     })
 
     .catch((err) => {
-      console.log(err);
+      // alert('something went wrong')
+      showError();
     });
 };
 
 const showNewsByCategory = (articles) => {
-  console.log(articles);
+  // console.log(articles);
+
+  if (articles.length === 0) {
+    showEmptyMessage();
+
+    return;
+  }
   newsContainer.innerHTML = "";
   articles.forEach((article) => {
-    console.log(article);
+    // console.log(article);
 
     newsContainer.innerHTML += `
      <div class="border border-gray-300 rounded-lg shadow-lg ">
@@ -91,44 +99,74 @@ newsContainer.addEventListener("click", (e) => {
   // console.log(e.target);
   // console.log(e.target.innerHTML);
   if (e.target.innerText === "Bookmark") {
-    console.log("Bookmark is clicked");
-   handleBookmarks(e)
+    // console.log("Bookmark is clicked");
+    handleBookmarks(e);
   }
 });
 
-const handleBookmarks = (e) =>{
- const title = e.target.parentNode.children[0].innerText;
- const id = e.target.parentNode.id;
- // console.log(id)
+const handleBookmarks = (e) => {
+  const title = e.target.parentNode.children[0].innerText;
+  const id = e.target.parentNode.id;
+  // console.log(id)
 
- bookmarks.push({
-   title: title,
-   id: id,
- });
- showBookmarks(bookmarks);
+  bookmarks.push({
+    title: title,
+    id: id,
+  });
+  showBookmarks(bookmarks);
+};
 
-}
+const showBookmarks = (bookmarks) => {
+  // console.log(bookmarks)
+  bookmarkContainer.innerHTML = "";
 
-
-const showBookmarks = (bookmarks) =>{
-// console.log(bookmarks)
-bookmarkContainer.innerHTML = ''
-
-bookmarks.forEach(bookmark =>{
-
-  bookmarkContainer.innerHTML += `
+  bookmarks.forEach((bookmark) => {
+    bookmarkContainer.innerHTML += `
   <div class="border my-2 p-1">
   <h1>${bookmark.title}</h1>
   <button onclick = "handleDeleteBookmark('${bookmark.id}')" class="btn btn-sm">Delete </button>
   </div>
   `;
-});
+  });
 
-}
+  bookmarkCount.innerText = bookmarks.length;
+};
 
-const handleDeleteBookmark = (bookmarkId) =>{
-  console.log(bookmarkId)
-}
+const handleDeleteBookmark = (bookmarkId) => {
+  // console.log(bookmarkId)
+  bookmarks.filter((bookmark) => bookmark.Id !== bookmarkId);
+  const filteredBookmarks = bookmarks.filter(
+    (bookmark) => bookmark.id !== bookmarkId
+  );
+  // console.log(filteredBookmarks)
+  bookmarks = filteredBookmarks;
+
+  showBookmarks(bookmarks);
+};
+
+showLoading = () => {
+  newsContainer.innerHTML = `
+  <div class="bg-green-400 text-white text-2xl font-bold  rounded-lg  p-5"> Loading ...
+
+    </div>
+  `;
+};
+
+const showError = () => {
+  newsContainer.innerHTML = `
+  <div class="bg-red-400 text-white text-2xl font-bold  rounded-lg p-5">Something went wrong
+
+    </div>
+  `;
+};
+
+const showEmptyMessage = () => {
+  newsContainer.innerHTML = `
+  <div class="bg-orange-600 text-white text-2xl font-bold  rounded-lg p-5">News Not Found For this Category
+
+    </div>
+  `;
+};
 
 loadCategory();
 loadNewsByCategory("bangladesh");
